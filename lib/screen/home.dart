@@ -53,7 +53,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void setupPlaylist() async {
     audioPlayer.open(Playlist(audios: audioList, startIndex: globalIndex),
-        showNotification: true, autoStart: false);
+        notificationSettings: NotificationSettings(
+      customNextAction: (player) {
+        if (globalIndex == (audioList.length - 1)) {
+          globalIndex = 0;
+          setState(() {});
+          selectedAudio = audioList[globalIndex];
+          setState(() {});
+        } else if (globalIndex < audioList.length - 1) {
+          globalIndex++;
+          setState(() {});
+          selectedAudio = audioList[globalIndex];
+          setState(() {});
+        }
+        player.next();
+      },
+      // customPrevAction: (player) {
+      //   if (globalIndex > 0) {
+      //     setState(() {
+      //       globalIndex--;
+
+      //       selectedAudio = audioList[globalIndex];
+      //     });
+      //   }
+      //   player.previous();
+      // }
+    ), showNotification: true, autoStart: false);
   }
 
   playMusic() async {
@@ -170,11 +195,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     IconButton(
                       //         iconSize: 50,
                       //         icon: Icon(Icons.skip_next_rounded),
-                      //         onPressed: () =>
+                      //         onPressed: () {
+                      //           globalIndex++;
+                      //           selectedAudio = audioList[globalIndex];
 
-                      //          skipNext()
-
-                      //         )
+                      //           setState(() {});
+                      //           skipNext();
+                      //         })
                       //   ],
                       // ),
                     ],
