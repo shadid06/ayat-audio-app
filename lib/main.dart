@@ -1,7 +1,11 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:ayat/screen/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  AssetsAudioPlayer.setupNotificationsOpenAction((notification) {
+    return true;
+  });
   runApp(const MyApp());
 }
 
